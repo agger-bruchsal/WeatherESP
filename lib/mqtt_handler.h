@@ -61,6 +61,16 @@ void handleMQTT(){
       Serial.println(sensor );
       client.publish(topic, sensor);
     }
+    for (unsigned int i = 0; i < sizeof(sensorState)/sizeof(sensorState[0]); i++ ) {
+      char topic2[String("stat/"+host+"/"+sensorState[i].sensor).length() + 1];
+      char sensor2[String(sensorState[i].value).length() + 1];
+      String("stat/"+host+"/"+sensorState[i].sensor).toCharArray(topic2, sizeof(topic2));
+      String(sensorState[i].value).toCharArray(sensor2, sizeof(sensor2));
+      Serial.print(topic2);
+      Serial.print(":");
+      Serial.println(sensor2 );
+      client.publish(topic2, sensor2);
+    }
   }
 }
 
